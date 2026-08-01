@@ -156,20 +156,20 @@
         </div>
     </div>
 
-    <!-- Reproductor de YouTube oculto visualmente -->
+    <!-- Reproductor de YouTube oculto con URL en formato embed -->
     <div class="hidden-player">
         <iframe 
             id="youtubePlayer"
             width="1" 
             height="1" 
-            src="https://youtu.be/Iiyp9rR9zko?si=zHjt99v0ckrcSmlc" 
+            src="https://www.youtube.com/embed/Iiyp9rR9zko?enablejsapi=1&autoplay=0" 
             title="YouTube video player" 
             frameborder="0" 
             allow="autoplay">
         </iframe>
     </div>
 
-    <!-- Cargar la API de YouTube Player -->
+    <!-- Cargar API de YouTube -->
     <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
@@ -199,20 +199,18 @@
             player = new YT.Player('youtubePlayer');
         }
 
-        // Control del botón: revela el mensaje y reproduce la música
+        // Control del botón: revela mensaje y reproduce la canción
         document.getElementById('miBoton').addEventListener('click', function() {
             const secret = document.getElementById('secret');
             secret.classList.toggle('show');
             
             if (secret.classList.contains('show')) {
                 this.textContent = "Ocultar secreto 🌌";
-                // Reproducir canción al mostrar el mensaje
                 if (player && typeof player.playVideo === 'function') {
                     player.playVideo();
                 }
             } else {
                 this.textContent = "Descubrir un secreto 🚀";
-                // Pausar canción si se vuelve a ocultar
                 if (player && typeof player.pauseVideo === 'function') {
                     player.pauseVideo();
                 }
