@@ -54,7 +54,7 @@
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
-            padding: 40px 30px;
+            padding: 35px 25px;
             max-width: 450px;
             width: 90%;
             text-align: center;
@@ -84,7 +84,20 @@
             font-size: 1.05rem;
             line-height: 1.6;
             color: #e5e7eb;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
+        }
+
+        /* Estilo para el Reproductor de Música */
+        .music-player {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .music-player iframe {
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+            max-width: 100%;
         }
 
         /* Botón Interactivo */
@@ -110,13 +123,13 @@
 
         /* Mensaje Oculto */
         .hidden-message {
-            margin-top: 20px;
+            margin-top: 0;
             font-size: 1.15rem;
             font-weight: bold;
             color: #ffd700;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+            transition: max-height 0.5s ease-out, opacity 0.5s ease-out, margin-top 0.5s ease-out;
             opacity: 0;
             text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
         }
@@ -139,6 +152,20 @@
             Entre más de 100 mil millones de galaxias en el universo observable... tu luz sigue siendo mi lugar favorito en el cosmos. ✨
         </p>
         
+        <!-- Reproductor de YouTube integrado -->
+        <div class="music-player">
+            <iframe 
+                id="youtubePlayer"
+                width="300" 
+                height="80" 
+                src="https://www.youtube.com/embed/iKzRIweSBLA?enablejsapi=1&autoplay=0" 
+                title="YouTube video player" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+        </div>
+
         <button class="btn" id="miBoton">Descubrir un secreto 🚀</button>
         
         <div class="hidden-message" id="secret">
