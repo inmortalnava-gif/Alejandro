@@ -54,7 +54,7 @@
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
-            padding: 35px 25px;
+            padding: 40px 30px;
             max-width: 450px;
             width: 90%;
             text-align: center;
@@ -84,20 +84,17 @@
             font-size: 1.05rem;
             line-height: 1.6;
             color: #e5e7eb;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
-        /* Estilo para el Reproductor de Música */
-        .music-player {
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .music-player iframe {
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
-            max-width: 100%;
+        /* Reproductor Invisible */
+        .hidden-player {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+            overflow: hidden;
         }
 
         /* Botón Interactivo */
@@ -152,26 +149,28 @@
             Entre más de 100 mil millones de galaxias en el universo observable... tu luz sigue siendo mi lugar favorito en el cosmos. ✨
         </p>
         
-        <!-- Reproductor de YouTube integrado -->
-        <div class="music-player">
-            <iframe 
-                id="youtubePlayer"
-                width="300" 
-                height="80" 
-                src="https://youtu.be/Iiyp9rR9zko?si=zHjt99v0ckrcSmlc" 
-                title="YouTube video player" 
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-            </iframe>
-        </div>
-
         <button class="btn" id="miBoton">Descubrir un secreto 🚀</button>
         
         <div class="hidden-message" id="secret">
             ¡Te amo de aquí a la última estrella del universo! ❤️💫
         </div>
     </div>
+
+    <!-- Reproductor de YouTube oculto visualmente -->
+    <div class="hidden-player">
+        <iframe 
+            id="youtubePlayer"
+            width="1" 
+            height="1" 
+            src="https://youtu.be/Iiyp9rR9zko?si=zHjt99v0ckrcSmlc" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="autoplay">
+        </iframe>
+    </div>
+
+    <!-- Cargar la API de YouTube Player -->
+    <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
         // Generador de estrellas de fondo
@@ -194,15 +193,29 @@
             starsContainer.appendChild(star);
         }
 
-        // Evento para el botón
+        // Inicializar la API de YouTube
+        let player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtubePlayer');
+        }
+
+        // Control del botón: revela el mensaje y reproduce la música
         document.getElementById('miBoton').addEventListener('click', function() {
             const secret = document.getElementById('secret');
             secret.classList.toggle('show');
             
             if (secret.classList.contains('show')) {
                 this.textContent = "Ocultar secreto 🌌";
+                // Reproducir canción al mostrar el mensaje
+                if (player && typeof player.playVideo === 'function') {
+                    player.playVideo();
+                }
             } else {
                 this.textContent = "Descubrir un secreto 🚀";
+                // Pausar canción si se vuelve a ocultar
+                if (player && typeof player.pauseVideo === 'function') {
+                    player.pauseVideo();
+                }
             }
         });
     </script>
