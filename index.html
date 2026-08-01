@@ -87,16 +87,6 @@
             margin-bottom: 25px;
         }
 
-        /* Reproductor Invisible */
-        .hidden-player {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            opacity: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
         /* Botón Interactivo */
         .btn {
             background: #8b5cf6;
@@ -156,21 +146,10 @@
         </div>
     </div>
 
-    <!-- Reproductor de YouTube oculto con URL en formato embed -->
-    <div class="hidden-player">
-        <iframe 
-            id="youtubePlayer"
-            width="1" 
-            height="1" 
-            src="https://www.youtube.com/embed/Iiyp9rR9zko?enablejsapi=1&autoplay=0" 
-            title="YouTube video player" 
-            frameborder="0" 
-            allow="autoplay">
-        </iframe>
-    </div>
-
-    <!-- Cargar API de YouTube -->
-    <script src="https://www.youtube.com/iframe_api"></script>
+    <!-- Elemento de Audio NATIVO e INVISIBLE -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://ia801503.us.archive.org/15/items/GoldenHour_201901/GoldenHour.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
         // Generador de estrellas de fondo
@@ -193,27 +172,20 @@
             starsContainer.appendChild(star);
         }
 
-        // Inicializar la API de YouTube
-        let player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtubePlayer');
-        }
+        // Elemento de audio
+        const audio = document.getElementById('bgMusic');
 
-        // Control del botón: revela mensaje y reproduce la canción
+        // Control del botón: revela el secreto Y reproduce la música sin fallos
         document.getElementById('miBoton').addEventListener('click', function() {
             const secret = document.getElementById('secret');
             secret.classList.toggle('show');
             
             if (secret.classList.contains('show')) {
                 this.textContent = "Ocultar secreto 🌌";
-                if (player && typeof player.playVideo === 'function') {
-                    player.playVideo();
-                }
+                audio.play().catch(err => console.log("Error al reproducir audio:", err));
             } else {
                 this.textContent = "Descubrir un secreto 🚀";
-                if (player && typeof player.pauseVideo === 'function') {
-                    player.pauseVideo();
-                }
+                audio.pause();
             }
         });
     </script>
